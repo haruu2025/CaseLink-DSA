@@ -1,0 +1,25 @@
+{
+  "name": "caselink-js",
+  "version": "1.0.0",
+  "description": "CaseLink - Data Structures & Algorithms Criminal Investigation Dashboard",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node improvements-tests.js && node phase4-backtracking/tests.js && node verdict-tests.js",
+    "test:verdict": "node verdict-tests.js",
+    "test:phase1": "node phase1-linear/demo.js",
+    "test:phase2": "node phase2-hierarchical/demo.js",
+    "test:phase3": "node phase3-searching-sorting/demo.js",
+    "test:phase4": "node phase4-backtracking/demo.js"
+  },
+  "keywords": [
+    "dsa",
+    "investigation",
+    "algorithms",
+    "backtracking",
+    "graph",
+    "bst"
+  ],
+  "author": "CaseLink Development Team",
+  "license": "ISC"
+}

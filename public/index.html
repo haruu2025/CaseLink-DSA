@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CaseLink — Learn Data Structures &amp; Algorithms Through Crime Investigation</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="app-nav">
+    <div class="nav-container">
+      <div class="nav-brand" id="navBrand">
+        <span class="brand-badge">CASELINK</span>
+        <div class="brand-text">
+          <span class="brand-title">INTERACTIVE DSA LAB</span>
+          <span class="brand-subtitle">Algorithmic Investigation System</span>
+        </div>
+      </div>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#home" class="nav-link active" data-view="landing" id="linkNavHome">Overview</a>
+        <a href="#learn" class="nav-link" id="linkNavLearn">The Science</a>
+        <a href="#how-it-works" class="nav-link" id="linkNavHow">How It Works</a>
+        <a href="#investigate" class="nav-link" data-view="dashboard" id="linkNavDashboard">Investigate</a>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Landing View CTA -->
+        <button id="btnNavInvestigate" class="btn btn-crimson btn-sm">
+          <span>START INVESTIGATING</span>
+          <span class="btn-arrow">&rarr;</span>
+        </button>
+        <!-- Dashboard View Case Selector Bar (shown when dashboard is active) -->
+        <div class="dashboard-nav-controls hidden" id="dashboardNavControls">
+          <button id="btnBackToLanding" class="btn btn-secondary btn-xs" title="Return to Landing Page">
+            &larr; Overview
+          </button>
+          <div class="case-selector-bar">
+            <label for="caseSelect" class="selector-label">DOSSIER:</label>
+            <select id="caseSelect" class="case-dropdown" aria-label="Select Investigation Case">
+              <!-- Loaded dynamically -->
+            </select>
+            <button id="btnReloadCase" class="btn btn-secondary btn-xs" title="Reload active case">Reload</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       VIEW 1: LANDING PAGE
+       ========================================================================= -->
+  <div id="landingView" class="view-section">
+    
+    <!-- 1. Hero Section -->
+    <section class="hero-section" id="heroSection">
+      <div class="hero-backdrop-grid" aria-hidden="true"></div>
+      
+      <div class="hero-container">
+        <div class="hero-content">
+          
+          <div class="hero-pill">
+            <span class="pulse-dot"></span>
+            <span class="pill-text">CASELINK // INTERACTIVE DSA LAB</span>
+          </div>
+
+          <h1 class="hero-headline">
+            Every clue has a structure.<br>
+            <span class="text-crimson-accent">Every case has a solution.</span>
+          </h1>
+
+          <p class="hero-supporting-text">
+            Explore Data Structures and Algorithms by investigating fictional cases, connecting evidence, uncovering relationships, and reconstructing events.
+          </p>
+
+          <div class="hero-cta-group">
+            <button id="btnHeroStart" class="btn btn-crimson btn-lg">
+              <span>START INVESTIGATING</span>
+              <span class="btn-arrow">&rarr;</span>
+            </button>
+            <a href="#learn" id="btnHeroExplore" class="btn btn-secondary btn-lg">
+              EXPLORE THE DSA
+            </a>
+          </div>
+
+          <!-- Metadata Elements -->
+          <div class="hero-metadata-grid">
+            <div class="metadata-item">
+              <span class="metadata-tag">4 DSA PHASES</span>
+              <span class="metadata-desc">Linear &bull; Trees/Graphs &bull; Search/Sort &bull; Backtracking</span>
+            </div>
+            <div class="metadata-item">
+              <span class="metadata-tag">INTERACTIVE CASE FILES</span>
+              <span class="metadata-desc">Forensic evidence lockers, suspect BST, and relationship networks</span>
+            </div>
+            <div class="metadata-item">
+              <span class="metadata-tag">LOGICAL RECONSTRUCTION</span>
+              <span class="metadata-desc">Constraint satisfaction engine with state-space pruning</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Hero Visual Evidence Board -->
+        <div class="hero-visual" aria-hidden="true">
+          <div class="evidence-board-card">
+            <div class="board-header">
+              <span class="board-badge">ACTIVE EVIDENCE NETWORK</span>
+              <span class="board-status">LIVE TELEMETRY</span>
+            </div>
+            
+            <div class="board-svg-container">
+              <svg viewBox="0 0 420 280" class="network-svg">
+                <defs>
+                  <linearGradient id="crimsonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ff6b6b" />
+                    <stop offset="100%" stop-color="#d62828" />
+                  </linearGradient>
+                  <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#d62828" stop-opacity="0.6" />
+                    <stop offset="100%" stop-color="#3b3b4a" stop-opacity="0.3" />
+                  </linearGradient>
+                </defs>
+                
+                <!-- Graph Edges -->
+                <line x1="210" y1="140" x2="90" y2="70" stroke="url(#lineGrad)" stroke-width="2" stroke-dasharray="4 2" />
+                <line x1="210" y1="140" x2="330" y2="70" stroke="url(#lineGrad)" stroke-width="2" />
+                <line x1="210" y1="140" x2="100" y2="210" stroke="url(#lineGrad)" stroke-width="2" />
+                <line x1="210" y1="140" x2="320" y2="210" stroke="url(#lineGrad)" stroke-width="2" stroke-dasharray="4 2" />
+                <line x1="90" y1="70" x2="100" y2="210" stroke="#292934" stroke-width="1.5" />
+                <line x1="330" y1="70" x2="320" y2="210" stroke="#292934" stroke-width="1.5" />
+
+                <!-- Center Node: Victim / Scene -->
+                <circle cx="210" cy="140" r="28" fill="#16161c" stroke="#d62828" stroke-width="2.5" />
+                <text x="210" y="137" fill="#ffffff" font-size="9" font-family="monospace" font-weight="bold" text-anchor="middle">[VICTIM]</text>
+                <text x="210" y="149" fill="#a3a3b2" font-size="8" font-family="monospace" text-anchor="middle">Lord Pemberton</text>
+
+                <!-- Node 1: Arthur Black (Suspect) -->
+                <circle cx="90" cy="70" r="24" fill="#16161c" stroke="#58a6ff" stroke-width="1.5" />
+                <text x="90" y="68" fill="#ffffff" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">[SUSPECT]</text>
+                <text x="90" y="79" fill="#a3a3b2" font-size="7" font-family="monospace" text-anchor="middle">Arthur Black (73)</text>
+
+                <!-- Node 2: Kitchen Knife (Evidence) -->
+                <circle cx="330" cy="70" r="24" fill="#16161c" stroke="#3fb950" stroke-width="1.5" />
+                <text x="330" y="68" fill="#ffffff" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">[EVIDENCE]</text>
+                <text x="330" y="79" fill="#a3a3b2" font-size="7" font-family="monospace" text-anchor="middle">Knife (Imp 88)</text>
+
+                <!-- Node 3: Study (Location) -->
+                <circle cx="100" cy="210" r="24" fill="#16161c" stroke="#f77f00" stroke-width="1.5" />
+                <text x="100" y="208" fill="#ffffff" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">[LOCATION]</text>
+                <text x="100" y="219" fill="#a3a3b2" font-size="7" font-family="monospace" text-anchor="middle">Locked Study</text>
+
+                <!-- Node 4: Timeline Sequence (Backtracking) -->
+                <circle cx="320" cy="210" r="24" fill="#16161c" stroke="#d62828" stroke-width="1.5" />
+                <text x="320" y="208" fill="#ffffff" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">[TIMELINE]</text>
+                <text x="320" y="219" fill="#a3a3b2" font-size="7" font-family="monospace" text-anchor="middle">Events E1&rarr;E5</text>
+
+                <!-- Edge Labels -->
+                <rect x="125" y="93" width="55" height="15" fill="#0e0e11" rx="3" stroke="#292934" />
+                <text x="152" y="104" fill="#ff6b6b" font-size="7.5" font-family="monospace" text-anchor="middle">partner of</text>
+
+                <rect x="242" y="93" width="46" height="15" fill="#0e0e11" rx="3" stroke="#292934" />
+                <text x="265" y="104" fill="#3fb950" font-size="7.5" font-family="monospace" text-anchor="middle">recovered</text>
+              </svg>
+            </div>
+
+            <div class="board-footer">
+              <div class="telemetry-pill">
+                <span class="telemetry-dot"></span>
+                <span>BFS: 11 Nodes Traversed</span>
+              </div>
+              <div class="telemetry-pill">
+                <span>BST Key: 73 (Duplicate)</span>
+              </div>
+              <div class="telemetry-pill">
+                <span>Pruned: 50 Branches</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 2. The Science Behind the Investigation (DSA Learning Section) -->
+    <section class="science-section" id="learn">
+      <div class="section-container">
+        
+        <div class="section-header">
+          <span class="section-kicker">ACADEMIC CURRICULUM &bull; CORE ALGORITHMS</span>
+          <h2 class="section-title">THE SCIENCE BEHIND THE INVESTIGATION</h2>
+          <p class="section-subtitle">
+            Data structures aren't abstract textbook puzzles &mdash; they are the architectural backbone required to categorize forensic evidence, traverse human social networks, and reconstruct crime timelines under strict logical constraints.
+          </p>
+        </div>
+
+        <div class="science-grid">
+          
+          <!-- Phase 1: Linear Structures -->
+          <div class="science-card">
+            <div class="card-phase-header">
+              <span class="phase-badge">PHASE 01</span>
+              <span class="complexity-tag">&Omicron;(1) / &Omicron;(n)</span>
+            </div>
+            <h3 class="science-card-title">Linear Structures</h3>
+            <p class="science-dsa-list">Linked Lists &bull; Stacks &bull; Queues &bull; Expression Evaluator</p>
+            <div class="science-card-body">
+              <div class="concept-block">
+                <span class="concept-label">DSA PRINCIPLES:</span>
+                <p>Sequential memory chaining, Last-In-First-Out (LIFO) stacks for state management, and First-In-First-Out (FIFO) queues for orderly item processing.</p>
+              </div>
+              <div class="concept-block highlight-concept">
+                <span class="concept-label">INVESTIGATION APPLICATION:</span>
+                <p>Organizing raw evidence items in a dynamic <strong>Linked List</strong>, maintaining an <strong>Action History Stack</strong> with full Undo/Redo capability for detective actions, and sequencing <strong>Witness Interview Queues</strong>.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phase 2: Trees & Graphs -->
+          <div class="science-card">
+            <div class="card-phase-header">
+              <span class="phase-badge">PHASE 02</span>
+              <span class="complexity-tag">&Omicron;(log n) / &Omicron;(V + E)</span>
+            </div>
+            <h3 class="science-card-title">Trees &amp; Graphs</h3>
+            <p class="science-dsa-list">Binary Trees &bull; Binary Search Tree (BST) &bull; Graph Adjacency List &bull; BFS &bull; DFS</p>
+            <div class="science-card-body">
+              <div class="concept-block">
+                <span class="concept-label">DSA PRINCIPLES:</span>
+                <p>Hierarchical decision trees, ordered BST storage supporting duplicate keys, and relational adjacency lists traversed via Breadth-First and Depth-First searches.</p>
+              </div>
+              <div class="concept-block highlight-concept">
+                <span class="concept-label">INVESTIGATION APPLICATION:</span>
+                <p>Classifying physical vs testimonial evidence, indexing suspects by suspicion score in a <strong>BST</strong> (with duplicate key preservation), and exploring social ties via <strong>Queue-based BFS</strong> to calculate degrees of separation from the victim.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phase 3: Searching & Sorting -->
+          <div class="science-card">
+            <div class="card-phase-header">
+              <span class="phase-badge">PHASE 03</span>
+              <span class="complexity-tag">&Omicron;(n log n)</span>
+            </div>
+            <h3 class="science-card-title">Searching &amp; Sorting</h3>
+            <p class="science-dsa-list">Linear Search &bull; Binary Search &bull; Insertion Sort &bull; Merge Sort &bull; Quick Sort</p>
+            <div class="science-card-body">
+              <div class="concept-block">
+                <span class="concept-label">DSA PRINCIPLES:</span>
+                <p>Comparison-based element ordering, divide-and-conquer partitioning, and logarithmic search on monotonic ordered arrays.</p>
+              </div>
+              <div class="concept-block highlight-concept">
+                <span class="concept-label">INVESTIGATION APPLICATION:</span>
+                <p>Rapid clue lookup by name (&Omicron;(n)) versus exact numeric importance (&Omicron;(log n) <strong>Binary Search</strong>), benchmarked against <strong>Insertion, Merge, and Quick Sort</strong> with live comparison and swap/move telemetry counters.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phase 4: Backtracking -->
+          <div class="science-card">
+            <div class="card-phase-header">
+              <span class="phase-badge">PHASE 04</span>
+              <span class="complexity-tag">&Omicron;(n!) &rarr; Pruned</span>
+            </div>
+            <h3 class="science-card-title">Backtracking Engine</h3>
+            <p class="science-dsa-list">State Space Search &bull; Early Branch Pruning &bull; Constraint Satisfaction</p>
+            <div class="science-card-body">
+              <div class="concept-block">
+                <span class="concept-label">DSA PRINCIPLES:</span>
+                <p>Systematic recursive exploration of permutation trees, abandoning whole invalid subtrees immediately when a constraint is broken (backtracking step).</p>
+              </div>
+              <div class="concept-block highlight-concept">
+                <span class="concept-label">INVESTIGATION APPLICATION:</span>
+                <p>Reconstructing the valid chronological crime timeline from unordered events while strictly enforcing <code>before</code>, <code>mustFollow</code>, and <code>notAdjacent</code> forensic rules &mdash; or proving an alibi impossible.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 3. How It Works Section -->
+    <section class="workflow-section" id="how-it-works">
+      <div class="section-container">
+        
+        <div class="section-header">
+          <span class="section-kicker">INVESTIGATIVE METHODOLOGY</span>
+          <h2 class="section-title">HOW THE INVESTIGATION WORKS</h2>
+          <p class="section-subtitle">
+            Follow a rigorous four-step analytical journey that turns fragmented clues into mathematically verified crime reconstructions.
+          </p>
+        </div>
+
+        <div class="workflow-steps-grid">
+          
+          <div class="step-card-journey">
+            <div class="step-badge">STEP 01</div>
+            <h4 class="step-title">OPEN A CASE</h4>
+            <p class="step-desc">
+              Select an active fictional case file &mdash; such as <em>The Blackwood Manor Mystery</em> or <em>The Poisoned Decanter</em> &mdash; to initialize the incident dossier, evidence records, and suspect registries.
+            </p>
+            <span class="step-meta">LinkedList &bull; Case Dossier</span>
+          </div>
+
+          <div class="step-arrow-divider" aria-hidden="true">&rarr;</div>
+
+          <div class="step-card-journey">
+            <div class="step-badge">STEP 02</div>
+            <h4 class="step-title">EXAMINE THE EVIDENCE</h4>
+            <p class="step-desc">
+              Analyze physical and testimonial items. Query evidence by name or importance score, and inspect suspect priority rankings organized in the Binary Search Tree.
+            </p>
+            <span class="step-meta">Linear/Binary Search &bull; BST</span>
+          </div>
+
+          <div class="step-arrow-divider" aria-hidden="true">&rarr;</div>
+
+          <div class="step-card-journey">
+            <div class="step-badge">STEP 03</div>
+            <h4 class="step-title">CONNECT THE CLUES</h4>
+            <p class="step-desc">
+              Traverse the relational graph to reveal hidden associations between persons, evidence, and crime scenes. Use Queue-based BFS to calculate shortest hop distances.
+            </p>
+            <span class="step-meta">Graph &bull; BFS &bull; Separation</span>
+          </div>
+
+          <div class="step-arrow-divider" aria-hidden="true">&rarr;</div>
+
+          <div class="step-card-journey">
+            <div class="step-badge">STEP 04</div>
+            <h4 class="step-title">RECONSTRUCT THE EVENTS</h4>
+            <p class="step-desc">
+              Execute the recursive backtracking engine. Prune contradictory candidate sequences and generate the single valid event sequence that satisfies all forensic constraints.
+            </p>
+            <span class="step-meta">Backtracking &bull; Pruning</span>
+          </div>
+
+        </div>
+
+        <!-- Academic Notice -->
+        <div class="academic-notice-card">
+          <div class="notice-icon">&bull;</div>
+          <div class="notice-text">
+            <strong>Academic Purpose &amp; Fictional Disclaimer:</strong> All cases, suspects, and forensic narratives in CaseLink are entirely fictional and engineered strictly for demonstrating computer science data structure mechanics, algorithm efficiency, and logical reasoning.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 4. Bottom Call To Action Banner -->
+    <section class="cta-banner-section">
+      <div class="section-container">
+        <div class="cta-banner-box">
+          <div class="cta-banner-content">
+            <span class="cta-kicker">LABORATORY CONSOLE READY</span>
+            <h3 class="cta-title">Ready to begin the investigation?</h3>
+            <p class="cta-desc">Launch the CaseLink laboratory to interactively examine evidence, search datasets, traverse social networks, and solve the case.</p>
+          </div>
+          <div class="cta-banner-actions">
+            <button id="btnCtaStart" class="btn btn-crimson btn-lg">
+              <span>LAUNCH CASE FILES</span>
+              <span class="btn-arrow">&rarr;</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- =========================================================================
+       VIEW 2: INVESTIGATION DASHBOARD
+       ========================================================================= -->
+  <div id="dashboardView" class="view-section hidden">
+    
+    <!-- Dashboard Container -->
+    <main class="dashboard-container">
+      
+      <!-- 1. Case Dossier Overview -->
+      <section class="card dossier-card" id="dossierSection">
+        <div class="card-header">
+          <div class="header-left">
+            <span class="tag tag-crimson" id="dossierCaseId">CASE-1042</span>
+            <h2 id="dossierTitle">Loading Case...</h2>
+          </div>
+          <div class="header-right">
+            <span class="status-indicator live"></span>
+            <span id="dossierStatus" class="status-text">Active Investigation</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <p id="dossierSynopsis" class="synopsis-text"></p>
+          <div class="meta-grid">
+            <div class="meta-item">
+              <span class="meta-label">LEAD INVESTIGATOR</span>
+              <span class="meta-value" id="dossierInvestigator">—</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">INCIDENT DATE &amp; TIME</span>
+              <span class="meta-value" id="dossierDate">—</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">ACTIVE DSA ENGINES</span>
+              <span class="meta-value">LinkedList &bull; BST &bull; Graph/BFS &bull; Search &bull; Sort &bull; Backtracking</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2-Column Main Layout -->
+      <div class="dashboard-grid">
+        
+        <!-- Left Column: Evidence Locker & Searching/Sorting -->
+        <div class="col-left">
+
+          <!-- Evidence Locker Card -->
+          <section class="card" id="evidenceSection">
+            <div class="card-header">
+              <h3>Evidence Locker</h3>
+              <span class="count-badge" id="evidenceCount">0 items</span>
+            </div>
+            <div class="card-body">
+              
+              <!-- Evidence Search Tool -->
+              <div class="search-panel">
+                <div class="search-type-toggle">
+                  <label class="radio-label">
+                    <input type="radio" name="searchAlgo" value="linear" checked>
+                    <span>Linear Search O(n) &mdash; by Name / ID</span>
+                  </label>
+                  <label class="radio-label">
+                    <input type="radio" name="searchAlgo" value="binary">
+                    <span>Binary Search O(log n) &mdash; by Importance</span>
+                  </label>
+                </div>
+
+                <div class="search-input-group">
+                  <input type="text" id="searchInput" class="input-field" placeholder="Search by evidence name (e.g. Kitchen Knife)...">
+                  <button id="btnSearch" class="btn btn-crimson">Execute Search</button>
+                </div>
+
+                <!-- Quick query chips -->
+                <div class="search-chips" id="searchChips">
+                  <span class="chip-label">Quick query:</span>
+                  <button type="button" class="chip" data-query="Kitchen Knife" data-algo="linear">Kitchen Knife</button>
+                  <button type="button" class="chip" data-query="Victim's Phone" data-algo="linear">Victim's Phone</button>
+                  <button type="button" class="chip" data-query="88" data-algo="binary">Importance 88</button>
+                  <button type="button" class="chip" data-query="95" data-algo="binary">Importance 95</button>
+                  <button type="button" class="chip" data-query="Missing Item" data-algo="linear">Non-existent item</button>
+                </div>
+
+                <!-- Search Diagnostics Output -->
+                <div id="searchOutput" class="algorithm-output hidden">
+                  <div class="output-header">
+                    <span class="algo-tag" id="searchAlgoName">Linear Search</span>
+                    <span class="metric-pill" id="searchMetricPill">Comparisons: 0</span>
+                  </div>
+                  <div class="output-body" id="searchResultContent"></div>
+                </div>
+              </div>
+
+              <!-- Sorting Bar -->
+              <div class="sort-bar">
+                <span class="sort-title">Sort Evidence:</span>
+                <div class="btn-group">
+                  <button class="btn btn-secondary btn-xs" id="btnSortInsertion">Insertion Sort</button>
+                  <button class="btn btn-secondary btn-xs" id="btnSortMerge">Merge Sort</button>
+                  <button class="btn btn-secondary btn-xs" id="btnSortQuick">Quick Sort</button>
+                  <button class="btn btn-secondary btn-xs" id="btnResetEvidence">Reset</button>
+                </div>
+                <div id="sortStats" class="sort-stats-text"></div>
+              </div>
+
+              <!-- Evidence Table -->
+              <div class="table-container">
+                <table class="data-table" id="evidenceTable">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Category</th>
+                      <th class="text-right">Importance</th>
+                      <th>Details</th>
+                    </tr>
+                  </thead>
+                  <tbody id="evidenceTableBody">
+                    <!-- Injected via app.js -->
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+          </section>
+
+          <!-- Suspects & Witnesses Card -->
+          <section class="card" id="suspectsSection">
+            <div class="card-header">
+              <h3>Suspect Priority Index (BST) &amp; Witness Queue</h3>
+            </div>
+            <div class="card-body">
+              
+              <!-- BST Search & Inorder Traversal -->
+              <div class="bst-controls">
+                <div class="bst-search-group">
+                  <label for="bstSearchInput" class="field-label">Search BST by Suspicion Score:</label>
+                  <div class="input-action-row">
+                    <input type="number" id="bstSearchInput" class="input-field input-sm" placeholder="Score (e.g. 73)">
+                    <button id="btnBstSearch" class="btn btn-secondary btn-sm">BST Search</button>
+                    <button id="btnBstReset" class="btn btn-secondary btn-sm">Show All In-Order</button>
+                  </div>
+                  <p class="field-hint">Note: Score 73 tests duplicate key handling (Arthur Black &amp; The Butler).</p>
+                </div>
+              </div>
+
+              <div id="bstOutput" class="algorithm-output hidden">
+                <div class="output-header">
+                  <span class="algo-tag">BST Key Query</span>
+                  <span class="metric-pill" id="bstMetricPill">0 match(es)</span>
+                </div>
+                <div class="output-body" id="bstResultContent"></div>
+              </div>
+
+              <h4 class="subhead">Suspects In-Order Traversal (Investigative Attention Order)</h4>
+              <div class="suspects-list" id="suspectsList">
+                <!-- Injected via app.js -->
+              </div>
+
+              <h4 class="subhead mt-4">Witness Interview Queue (FIFO Order)</h4>
+              <div class="witness-queue-container" id="witnessQueueList">
+                <!-- Injected via app.js -->
+              </div>
+
+            </div>
+          </section>
+
+        </div>
+
+        <!-- Right Column: Relationship Graph & Backtracking Timeline -->
+        <div class="col-right">
+
+          <!-- Relationship Network Graph Card -->
+          <section class="card" id="graphSection">
+            <div class="card-header">
+              <h3>Relationship Network (Graph &amp; BFS / DFS)</h3>
+              <span class="count-badge" id="graphEdgeCount">0 connections</span>
+            </div>
+            <div class="card-body">
+              
+              <!-- Graph Controls -->
+              <div class="graph-controls-box">
+                <div class="control-row">
+                  <div class="form-group">
+                    <label for="graphStartNode" class="field-label">Source Node:</label>
+                    <select id="graphStartNode" class="input-field select-field">
+                      <!-- Populated dynamically -->
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="graphTargetNode" class="field-label">Target Node (for Degrees of Separation):</label>
+                    <select id="graphTargetNode" class="input-field select-field">
+                      <!-- Populated dynamically -->
+                    </select>
+                  </div>
+                </div>
+
+                <div class="btn-cluster">
+                  <button id="btnGraphBfs" class="btn btn-crimson btn-sm">Run BFS Traversal</button>
+                  <button id="btnGraphDfs" class="btn btn-secondary btn-sm">Run DFS Traversal</button>
+                  <button id="btnGraphDistance" class="btn btn-secondary btn-sm">Degrees of Separation</button>
+                  <button id="btnGraphRank" class="btn btn-secondary btn-sm">Rank by Distance</button>
+                </div>
+              </div>
+
+              <!-- Graph Diagnostics Output -->
+              <div id="graphOutput" class="algorithm-output">
+                <div class="output-header">
+                  <span class="algo-tag" id="graphAlgoTag">Graph Traversal Console</span>
+                  <span class="metric-pill" id="graphMetricPill">Select an operation above</span>
+                </div>
+                <div class="output-body" id="graphResultContent">
+                  <p class="text-muted">Click "Run BFS Traversal" to explore connections starting from the selected node using CaseLink's Queue-based BFS algorithm.</p>
+                </div>
+              </div>
+
+              <!-- Direct connections preview -->
+              <h4 class="subhead mt-3">Known Relationship Edges</h4>
+              <div class="edges-list" id="graphEdgesList">
+                <!-- Injected dynamically -->
+              </div>
+
+            </div>
+          </section>
+
+          <!-- Crime Event Timeline Reconstruction (Phase 4 Backtracking) Card -->
+          <section class="card highlight-card" id="reconstructionSection">
+            <div class="card-header">
+              <div class="header-left">
+                <span class="tag tag-crimson">PHASE 4</span>
+                <h3>Crime Event Timeline Reconstruction</h3>
+              </div>
+              <button id="btnReconstruct" class="btn btn-crimson">
+                &#9654; Run Backtracking Engine
+              </button>
+            </div>
+            <div class="card-body">
+              
+              <p class="section-desc">
+                Uses recursive backtracking with early branch pruning to resolve the chronological ordering of crime events while strictly adhering to witness and forensic constraints.
+              </p>
+
+              <!-- Established Events & Constraints -->
+              <div class="timeline-inputs-grid">
+                <div>
+                  <h4 class="subhead">Discovered Events Pool</h4>
+                  <div class="events-pool" id="eventsPool">
+                    <!-- Injected dynamically -->
+                  </div>
+                </div>
+                <div>
+                  <h4 class="subhead">Active Forensic Constraints</h4>
+                  <div class="constraints-pool" id="constraintsPool">
+                    <!-- Injected dynamically -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Contradictory Constraint Simulation Tool -->
+              <div class="simulation-toggle-row">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="chkContradiction">
+                  <span>Simulate Impossible Alibi (Inject contradictory circular constraint to test early pruning to 0 solutions)</span>
+                </label>
+              </div>
+
+              <!-- Reconstruction Results -->
+              <div id="reconstructionOutput" class="algorithm-output hidden mt-4">
+                <div class="output-header">
+                  <span class="algo-tag" id="reconAlgoTag">Backtracking Engine Results</span>
+                  <div class="metric-pill-group" id="reconMetrics">
+                    <!-- Metrics injected -->
+                  </div>
+                </div>
+                <div class="output-body" id="reconResultContent">
+                  <!-- Solutions injected -->
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+        </div>
+      </div>
+
+      <!-- =========================================================================
+           3. THE FINAL VERDICT (Solve the Case Section)
+           ========================================================================= -->
+      <section class="card verdict-card" id="verdictSection">
+        <div class="card-header verdict-card-header">
+          <div class="header-left">
+            <span class="tag tag-crimson">SOLVE THE CASE</span>
+            <h2 class="verdict-main-title">THE FINAL VERDICT</h2>
+          </div>
+          <div class="header-right">
+            <span class="verdict-subtext">&ldquo;Every clue leads somewhere. Can you identify the truth?&rdquo;</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="verdict-intro-desc">
+            Weigh the physical evidence, cross-examine the suspect BST priority index, trace relational graph pathways, and consult the reconstructed event timeline. Accuse the individual you believe is responsible for the crime.
+          </p>
+
+          <form id="verdictForm" onsubmit="return false;">
+            
+            <!-- Step 1: Suspect Selection -->
+            <div class="verdict-form-section">
+              <div class="verdict-section-title-row">
+                <span class="step-num-pill">1</span>
+                <h4 class="verdict-step-title">SELECT THE ACCUSED SUSPECT</h4>
+                <span class="field-required">* Required</span>
+              </div>
+              <p class="field-hint">Suspect cards are populated directly from the current case dossier. Suspicion scores serve as investigative indicators, not absolute proof.</p>
+              
+              <div class="verdict-suspects-grid" id="verdictSuspectsGrid">
+                <!-- Dynamically populated from active case data -->
+              </div>
+            </div>
+
+            <!-- Step 2: Reasoning Text Area -->
+            <div class="verdict-form-section">
+              <div class="verdict-section-title-row">
+                <span class="step-num-pill">2</span>
+                <h4 class="verdict-step-title">DOCUMENT INVESTIGATIVE REASONING</h4>
+                <span class="field-required">* Recommended</span>
+              </div>
+              <p class="field-hint">Explain the culprit's motive, their opportunity, and how they breached physical or timeline constraints.</p>
+              
+              <textarea 
+                id="verdictReasoning" 
+                class="input-field verdict-textarea" 
+                rows="4" 
+                placeholder="Example: The suspect exploited their corridor access pass prior to the blackout, creating a diversion through phone calls before entering through the forced terrace window..."></textarea>
+            </div>
+
+            <!-- Step 3: Supporting Evidence Selection -->
+            <div class="verdict-form-section">
+              <div class="verdict-section-title-row">
+                <span class="step-num-pill">3</span>
+                <h4 class="verdict-step-title">SUPPORTING EVIDENCE LOCKER (OPTIONAL)</h4>
+                <span class="field-optional">Select Clues</span>
+              </div>
+              <p class="field-hint">Check all recovered evidence items from the active case that substantiate your accusation.</p>
+              
+              <div class="verdict-evidence-grid" id="verdictEvidenceGrid">
+                <!-- Dynamically populated from active case evidence -->
+              </div>
+            </div>
+
+            <!-- Actions Bar -->
+            <div class="verdict-actions-bar">
+              <div class="verdict-primary-actions">
+                <button type="button" id="btnSubmitVerdict" class="btn btn-crimson btn-lg">
+                  <span>SUBMIT VERDICT</span>
+                  <span class="btn-arrow">&rarr;</span>
+                </button>
+                <button type="button" id="btnRevealSolution" class="btn btn-secondary btn-lg" title="Surrender and reveal canonical solution">
+                  REVEAL SOLUTION
+                </button>
+              </div>
+              <button type="button" id="btnResetVerdictForm" class="btn btn-secondary btn-xs">
+                Clear Form
+              </button>
+            </div>
+
+          </form>
+
+          <!-- Verdict Validation Alert (for missing suspect) -->
+          <div id="verdictAlert" class="verdict-alert hidden" role="alert"></div>
+
+          <!-- Results & Case Completion Panel -->
+          <div id="verdictResultPanel" class="verdict-result-panel hidden">
+            <!-- Injected dynamically upon verdict submission or reveal -->
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-content">
+      <div class="footer-left">
+        <strong>CaseLink &mdash; Interactive Data Structures &amp; Algorithms Laboratory</strong>
+        <p>Learn Linear Structures, Trees, Graphs, Sorting, Searching, and Backtracking through criminal investigation.</p>
+      </div>
+      <div class="footer-right">
+        <span>Vanilla Node.js CommonJS Server &bull; Zero External Dependencies</span>
+        <span>All Cases &amp; Persons Fictional &bull; For Educational Demonstration</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
